@@ -3,14 +3,14 @@
 This Python script scans your folders and looks for Dolby Atmos audio tracks in metadata.
 
 - [Dolby Atmos scanner](#dolby-atmos-scanner)
-  - [functionalities](#functionalities)
+  - [Functionalities](#functionalities)
   - [Screens of the interface](#screens-of-the-interface)
     - [General interface](#general-interface)
     - [Completed scan](#completed-scan)
     - [Scan with language filter](#scan-with-language-filter)
   - [Why this script ?](#why-this-script-)
 
-## functionalities
+## Functionalities
 
 This script supports the following functionalities:
 
