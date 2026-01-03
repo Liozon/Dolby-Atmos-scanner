@@ -1,0 +1,21 @@
+{
+    "title": "Dolby Atmos scanner",
+    "add_folder": "Ajouter dossier",
+    "scan": "Scanner",
+    "language_filter": "Filtre langue (eng, fre, etc...)",
+    "export_csv": "Exporter CSV",
+    "export_txt": "Exporter TXT",
+    "ready": "Prêt",
+    "scanning": "Scan en cours...",
+    "done": "Scan terminé",
+    "no_folder": "Aucun dossier sélectionné",
+    "remove_folder": "Supprimer le dossier sélectionné",
+    "ui_language": "Langue de l'UI",
+    "folder_to_scan": "Dossiers à scanner",
+    "col_file": "Fichier",
+    "col_format": "Format",
+    "col_lang": "Langue",
+    "col_codec": "Codec",
+    "col_profile": "Profil",
+    "remove_selected": "Supprimer la sélection"
+}
