@@ -17,5 +17,12 @@
     "col_lang": "Langue",
     "col_codec": "Codec",
     "col_profile": "Profil",
-    "remove_selected": "Supprimer la sélection"
+    "remove_selected": "Supprimer la sélection",
+    "about": "À propos de cette application",
+    "about_version": "Version {version}",
+    "about_author": "Créée par Liozon",
+    "about_github": "Dépôt GitHub",
+    "about_check_update": "Vérifier les mises à jour",
+    "about_close": "Fermer",
+    "error": "Une erreur est survenue"
 }
