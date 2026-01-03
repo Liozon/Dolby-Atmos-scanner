@@ -6,6 +6,7 @@ import subprocess
 import threading
 import traceback
 import time
+import webbrowser
 from pathlib import Path
 
 import ttkbootstrap as tb
@@ -16,9 +17,11 @@ from tkinter import filedialog, messagebox
 # ==========================================================
 # CONFIG
 # ==========================================================
+VERSION = "1.0"
 VIDEO_EXTENSIONS = {".mkv", ".mp4", ".avi", ".mov", ".ts", ".m2ts"}
 CACHE_FILE = "scan_cache.json"
 DEFAULT_LANG = "en"
+GITHUB_REPO = "https://github.com/Liozon/Dolby-Atmos-scanner"
 
 # ==========================================================
 # PYINSTALLER RESOURCE PATH
@@ -251,9 +254,9 @@ class ScannerGUI:
         - Results treeview
         - Progress bar with time estimate
         - Export buttons
-        - Status bar
+        - Status bar with About link
         """
-        self.root.title(self.tr("title"))
+        self.root.title(f"{self.tr('title')} - v{VERSION}")
         try:
             self.root.iconbitmap(ICON_PATH)
         except Exception:
@@ -330,9 +333,122 @@ class ScannerGUI:
         tb.Button(bottom, text=self.tr("export_csv"),
                   command=self.export_csv).pack(side=LEFT, padx=5)
 
-        # STATUS BAR
-        self.status = tb.Label(self.root, text=self.tr("ready"), anchor=W)
-        self.status.pack(fill=X, padx=10)
+        # STATUS BAR WITH ABOUT LINK
+        status_frame = tb.Frame(self.root)
+        status_frame.pack(fill=X, padx=10)
+        
+        self.status = tb.Label(status_frame, text=self.tr("ready"), anchor=W)
+        self.status.pack(side=LEFT, fill=X, expand=True)
+        
+        # About link (styled as a link)
+        self.about_link = tb.Label(
+            status_frame, 
+            text=self.tr("about"),
+            foreground="#3498db",
+            cursor="hand2",
+            anchor=E
+        )
+        self.about_link.pack(side=RIGHT, padx=5)
+        self.about_link.bind("<Button-1>", lambda e: self.show_about())
+
+    def show_about(self):
+        """
+        Displays the About dialog with application information, author,
+        GitHub link, and update check functionality.
+        """
+        about_win = tk.Toplevel(self.root)
+        about_win.title(self.tr("about"))
+        about_win.geometry("400x250")
+        about_win.resizable(False, False)
+        about_win.transient(self.root)
+        about_win.grab_set()
+        
+        # Center the window
+        about_win.update_idletasks()
+        x = (about_win.winfo_screenwidth() // 2) - (about_win.winfo_width() // 2)
+        y = (about_win.winfo_screenheight() // 2) - (about_win.winfo_height() // 2)
+        about_win.geometry(f"+{x}+{y}")
+        
+        try:
+            about_win.iconbitmap(ICON_PATH)
+        except Exception:
+            pass
+        
+        # Content frame
+        content = tb.Frame(about_win, padding=20)
+        content.pack(fill=BOTH, expand=True)
+        
+        # Title
+        title = tb.Label(
+            content,
+            text=f"Dolby Atmos Scanner",
+            font=("Segoe UI", 16, "bold")
+        )
+        title.pack(pady=(0, 5))
+        
+        # Version
+        version = tb.Label(
+            content,
+            text=self.tr("about_version").format(version=VERSION),
+            font=("Segoe UI", 10)
+        )
+        version.pack(pady=5)
+        
+        # Author
+        author = tb.Label(
+            content,
+            text=self.tr("about_author"),
+            font=("Segoe UI", 10)
+        )
+        author.pack(pady=5)
+        
+        # GitHub link
+        github_frame = tb.Frame(content)
+        github_frame.pack(pady=5)
+        
+        github_label = tb.Label(
+            github_frame,
+            text=self.tr("about_github"),
+            foreground="#3498db",
+            cursor="hand2",
+            font=("Segoe UI", 10, "underline")
+        )
+        github_label.pack()
+        github_label.bind("<Button-1>", lambda e: webbrowser.open(GITHUB_REPO))
+        
+        # Check for updates button
+        update_btn = tb.Button(
+            content,
+            text=self.tr("about_check_update"),
+            command=lambda: self.check_for_updates(about_win),
+            bootstyle=INFO
+        )
+        update_btn.pack(pady=5)
+        
+        # Close button
+        close_btn = tb.Button(
+            content,
+            text=self.tr("about_close"),
+            command=about_win.destroy,
+            bootstyle=SECONDARY
+        )
+        close_btn.pack(pady=0)
+
+    def check_for_updates(self, parent_win):
+        """
+        Checks for application updates by opening the GitHub releases page.
+        
+        Args:
+            parent_win: Parent window for displaying messages
+        """
+        try:
+            webbrowser.open(f"{GITHUB_REPO}/releases/latest")
+        except Exception:
+            messagebox.showerror(
+                self.tr("error"),
+                self.tr("about_update_error"),
+                parent=parent_win
+            )
 
     def change_language(self, _=None):
         """
@@ -524,7 +640,7 @@ if __name__ == "__main__":
     """
     try:
         app = tb.Window(
-            title="Dolby Atmos scanner",
+            title=f"Dolby Atmos scanner - v{VERSION}",
             themename="darkly",
             size=(1200, 600),
             resizable=(True, True)
