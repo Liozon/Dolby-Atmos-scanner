@@ -15,6 +15,7 @@ This Python script scans your folders and looks for Dolby Atmos audio tracks in 
 This script supports the following functionalities:
 
 - One or multiple folders scan
+- Remaining time of current scan
 - Export the results to a TXT or CSV file
 - Audio language filter
 - Cached results, to avoid scanning again a previous scanned file
