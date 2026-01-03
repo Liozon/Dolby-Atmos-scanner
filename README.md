@@ -19,6 +19,7 @@ This script supports the following functionalities:
 - Export the results to a TXT or CSV file
 - Audio language filter
 - Cached results, to avoid scanning again a previous scanned file
+- Supports multiple languages
 
 ## Screens of the interface
 
